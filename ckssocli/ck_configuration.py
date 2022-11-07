@@ -1,6 +1,7 @@
 import sys
 import json
 import subprocess
+import os
 
 
 def configure_utility():
@@ -26,10 +27,16 @@ def configure_utility():
     config = {}
 
     # Reading existing data from ~/.ck-sso-cli/config.json
+    try:
+        config_file_read = open(f'{directory}/.ck-sso-cli/config.json', 'r')
+        config_file_read.close()
+    except:
+        os.system('mkdir ~/.ck-sso-cli')
+        os.system ('touch ~/.ck-sso-cli/config.json')
+
     with open(f'{directory}/.ck-sso-cli/config.json', 'r') as config_file_read:
         try:
             config = json.load(config_file_read)
-            # print(config)
         except:
             pass
     

@@ -1,1 +1,1 @@
-# ck-sso-cli
+# CK-SSO-CLI

@@ -1,11 +1,9 @@
-import os 
 from setuptools import setup, find_packages, os
 
 here = os.path.abspath(os.path.dirname(__file__))
 exec(open(os.path.join(here, 'ckssocli/version.py')).read())
 
-os.system('mkdir ~/.ck-sso-cli')
-os.system ('touch ~/.ck-sso-cli/config.json')
+
 setup(
     name='ck-sso-cli',
     version=__version__,
