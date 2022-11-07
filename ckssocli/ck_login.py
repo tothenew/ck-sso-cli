@@ -42,9 +42,9 @@ def login_utility():
 def update_aws_config(config,profile,directory):
     try:
         aws_config_read = open(f'{directory}/.aws/config','r')
-        aws_config_read.exit()
+        aws_config_read.close()
     except:
-        os.system(f'mkdir {directory}/.aws')
+        os.system(f'mkdir {directory}/.aws > file.tmp')
         os.system(f'touch {directory}/.aws/config')
         os.system(f'touch {directory}/.aws/credentials')
     if profile != 'default':
@@ -90,7 +90,7 @@ def get_sso_creds(profile):
 def assume_role_using_sts(config,profile,directory):
     boto3.setup_default_session(profile_name=f'{profile}-sso')
     client = boto3.client('sts')
-    response = client.assume_role(RoleArn=config[profile]['destination_role_arn'],RoleSessionName=profile)
+    response = client.assume_role(RoleArn=config[profile]['destination_role_arn'],RoleSessionName=config[profile]['email_id'])
     aki = response['Credentials']['AccessKeyId']
     sak = response['Credentials']['SecretAccessKey']
     st = response['Credentials']['SessionToken']

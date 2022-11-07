@@ -42,6 +42,7 @@ def configure_utility():
     
     # Writing data to ~/.ck-sso-cli/config.json
     with open(f'{directory}/.ck-sso-cli/config.json', 'w') as config_file_write:
+        email_id = input('Enter your Email ID: ')
         sso_start_url = input('Enter the start URL of your SSO:')
         sso_region = input('Enter the region where SSO is provisioned: ')
         sso_account_id = input("Enter the SSO Account ID: ")
@@ -57,4 +58,5 @@ def configure_utility():
         config[profile]['region']=region
         config[profile]['output']=output
         config[profile]['destination_role_arn']=destination_role_arn
+        config[profile]['email_id']=email_id
         json.dump(config,config_file_write)
