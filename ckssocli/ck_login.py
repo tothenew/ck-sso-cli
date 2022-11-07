@@ -2,6 +2,7 @@ import sys
 import subprocess
 import json
 import boto3
+import os 
 
 def login_utility():
     directory = subprocess.run(['pwd'], capture_output=True)
@@ -39,6 +40,13 @@ def login_utility():
 
 
 def update_aws_config(config,profile,directory):
+    try:
+        aws_config_read = open(f'{directory}/.aws/config','r')
+        aws_config_read.exit()
+    except:
+        os.system(f'mkdir {directory}/.aws')
+        os.system(f'touch {directory}/.aws/config')
+        os.system(f'touch {directory}/.aws/credentials')
     if profile != 'default':
         with open(f'{directory}/.aws/config','w') as aws_config_write:
             aws_config_contents = f'''[profile {profile}-sso]
