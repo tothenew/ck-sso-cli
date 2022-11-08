@@ -14,3 +14,6 @@
 
 ## [0.2.1] 2022-11-08
 - Minor bug fix
+
+## [1.0.0] 2022-11-08
+- Completed testing and ready for major release
