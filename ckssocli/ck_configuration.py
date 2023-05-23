@@ -6,7 +6,8 @@ import os
 
 def configure_utility():
     # Retrieving the directory where .ck-sso-cli/ folder is present
-    directory = subprocess.run(['pwd'], capture_output=True)
+    cmd = 'echo $HOME'
+    directory = subprocess.run(cmd, shell=True, capture_output=True)
     directory = directory.stdout.decode('utf-8')
     directory = directory.split('\n')
     directory = directory[0]

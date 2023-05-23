@@ -5,7 +5,8 @@ import boto3
 import os 
 
 def login_utility():
-    directory = subprocess.run(['pwd'], capture_output=True)
+    cmd = 'echo $HOME'
+    directory = subprocess.run(cmd, shell=True, capture_output=True)
     directory = directory.stdout.decode('utf-8')
     directory = directory.split('\n')
     directory = directory[0]

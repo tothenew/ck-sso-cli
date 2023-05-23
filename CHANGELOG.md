@@ -17,3 +17,6 @@
 
 ## [1.0.0] 2022-11-08
 - Completed testing and ready for major release
+
+## [1.0.1] 2023-05-23
+- Bug fix: Could not find config.json when the user was not in their home directory

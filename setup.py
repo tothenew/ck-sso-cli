@@ -12,7 +12,7 @@ setup(
     license='Apache License 2.0',
     author='Aditya Ajay',
     author_email='aditya.ajay@tothenew.com',
-    url='https://github.com/okta-awscli/okta-awscli',
+    url='https://www.cloudkeeper.ai/',
     entry_points={
         'console_scripts': [
             'ck-sso-cli=ckssocli.ck_sso_cli:main',
