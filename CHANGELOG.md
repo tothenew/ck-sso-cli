@@ -20,3 +20,6 @@
 
 ## [1.0.1] 2023-05-23
 - Bug fix: Could not find config.json when the user was not in their home directory
+
+## [1.0.1] 2023-05-23
+- Temporary Patch: Host multiple profiles at the same time

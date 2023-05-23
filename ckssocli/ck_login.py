@@ -3,6 +3,7 @@ import subprocess
 import json
 import boto3
 import os 
+import time
 
 def login_utility():
     cmd = 'echo $HOME'
@@ -49,6 +50,12 @@ def update_aws_config(config,profile,directory):
         os.system(f'touch {directory}/.aws/config')
         os.system(f'touch {directory}/.aws/credentials')
     if profile != 'default':
+        existing_data = ''
+        with open(f'{directory}/.aws/config','r') as aws_config_read:
+                  existing_data = aws_config_read.read()
+                  if profile in existing_data:
+                      ts=time.time()
+                      existing_data = existing_data.replace(f'{profile}',f'DELETE-{ts}')
         with open(f'{directory}/.aws/config','w') as aws_config_write:
             aws_config_contents = f'''[profile {profile}-sso]
 sso_start_url = {config[profile]['sso_start_url']}
@@ -61,8 +68,16 @@ output = {config[profile]['output']}
 [profile {profile}]
 output = json
             '''
-            aws_config_write.write(aws_config_contents)
+            aws_config_write.write(f'{aws_config_contents}\n')
+            aws_config_write.write(f'{existing_data}\n')
     else:
+        existing_data = ''
+        with open(f'{directory}/.aws/config','r') as aws_config_read:
+                  existing_data = aws_config_read.read()
+                  if profile in existing_data:
+                      ts=time.time()
+                      existing_data = existing_data.replace(f'{profile}',f'DELETE-{ts}')
+                    
         with open(f'{directory}/.aws/config','w') as aws_config_write:
             aws_config_contents = f'''[profile {profile}-sso]
 sso_start_url = {config[profile]['sso_start_url']}
@@ -75,7 +90,8 @@ output = {config[profile]['output']}
 [{profile}]
 output = json
             '''
-            aws_config_write.write(aws_config_contents)
+            aws_config_write.write(f'{aws_config_contents}\n')
+            aws_config_write.write(f'{existing_data}\n')
         
 
 def get_sso_creds(profile):
@@ -83,7 +99,6 @@ def get_sso_creds(profile):
         boto3.setup_default_session(profile_name=f'{profile}-sso')
         client = boto3.client('sts')
         client.get_caller_identity()
-        # print(response)
     except:
         subprocess.run(['aws','sso','login','--profile',f'{profile}-sso'])
 
@@ -96,11 +111,19 @@ def assume_role_using_sts(config,profile,directory):
     sak = response['Credentials']['SecretAccessKey']
     st = response['Credentials']['SessionToken']
 
+    existing_data = ''
+    with open(f'{directory}/.aws/credentials','r') as aws_credentials_read:
+        existing_data = aws_credentials_read.read()
+        if f'[{profile}]' in existing_data:
+            ts=time.time()
+            existing_data = existing_data.replace(f'{profile}',f'DELETE-{ts}')
+
     with open(f'{directory}/.aws/credentials','w') as aws_credentials_write:
         aws_credentials_content = f'''[{profile}]
 aws_access_key_id = {aki}
 aws_secret_access_key = {sak}
 aws_session_token = {st}
         '''
-        aws_credentials_write.write(aws_credentials_content)
+        aws_credentials_write.write(f'{aws_credentials_content}\n')
+        aws_credentials_write.write(f'{existing_data}\n')
     print("Credentials written in ~/.aws/credentials file and are ready for use.")
