@@ -5,8 +5,8 @@ This project is currently supported in the following Operating Systems -
 - `macOS`
 - `Linux`
 - `WSL on Windows`
+- `Windows`
 
-Windows is not natively supported.
 ## Python Support
 This project is written for **Python 3.6 and above**. 
 

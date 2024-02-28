@@ -5,12 +5,23 @@ import boto3
 import os 
 import time
 
-def login_utility():
-    cmd = 'echo $HOME'
+def get_home_directory():
+    if sys.platform.startswith('linux') or sys.platform.startswith('darwin'):
+        # Linux or MacOS
+        cmd = 'echo $HOME'
+    elif sys.platform.startswith('win'):
+        # Windows
+        cmd = 'echo %USERPROFILE%'
+    else:
+        print(f'Unsupported platform: {sys.platform}')
+        exit(1)
+
     directory = subprocess.run(cmd, shell=True, capture_output=True)
-    directory = directory.stdout.decode('utf-8')
-    directory = directory.split('\n')
-    directory = directory[0]
+    directory = directory.stdout.decode('utf-8').strip()
+    return directory
+
+def login_utility():
+    directory = get_home_directory()
 
     profile = 'default'
 

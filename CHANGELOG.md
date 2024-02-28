@@ -23,3 +23,6 @@
 
 ## [1.0.1] 2023-05-23
 - Temporary Patch: Host multiple profiles at the same time
+
+## [2.0.0] 2024-02-28
+- Feature: Added support for Windows
